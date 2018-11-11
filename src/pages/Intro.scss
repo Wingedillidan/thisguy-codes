@@ -1,0 +1,70 @@
+@import "../styles/colors";
+
+$GRID_COLOR: $purple-lighter;
+$GRID_ANGLE_STEP: 10deg;
+$GRID_SPACING: 10vw;
+$GRIDLINE_WIDTH: .2em;
+$HORIZON_WIDTH: .2em;
+
+$GRID_LEFT_INIT: 15%;  // Where to start the left side of lines
+
+p::after {
+    content: '*';
+}
+
+.backdrop {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 40rem;
+    background-color: #915D91;
+    
+    .horizon {
+        position: relative;
+        border-top: solid $HORIZON_WIDTH $GRID_COLOR;
+        background-color: $purple-darkest;
+        top: 40%;
+        height: 60%;
+        width: 100%;
+        overflow: hidden;
+
+        #verticals-left-1, #verticals-left-2 {
+            &, &::after, &::before {
+                position: absolute;
+                height: 110%;
+                border-left: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+                border-right: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+                background-color: $GRID_COLOR;
+                top: -1px;
+                transform-origin: 100% 0;
+            }
+            
+            &::after, &::before {
+                content: '';
+            }
+        }
+
+        // Front 3 bars, left of center
+        #verticals-left-1 {
+            right: $GRID_LEFT_INIT;
+            transform: rotate($GRID_ANGLE_STEP);
+        }
+
+        // Back 3 bars, left of center
+        #verticals-left-2 {
+            right: calc(#{$GRID_LEFT_INIT} + (#{$GRID_SPACING} * 3) + #{$GRIDLINE_WIDTH});
+            transform: rotate(calc(#{$GRID_ANGLE_STEP} * 4));
+        }
+
+        #verticals-left-1, #verticals-left-2 {
+            &::before {
+                transform: rotate($GRID_ANGLE_STEP) translateX(calc(-1 * #{$GRID_SPACING}));
+            }
+
+            &::after {
+                transform: rotate(calc(#{$GRID_ANGLE_STEP} * 2)) translateX(calc(-1 * #{$GRID_SPACING} * 2));
+            }
+        }
+
+    }
+}
