@@ -74,7 +74,7 @@ export default class Intro extends React.Component {
                         {horizontals}
                     </div>
                 </div>
-                <h1 className="title">THISGUY</h1>
+                <h1 className="title">THIS GUY</h1>
             </div>
         )
     }
