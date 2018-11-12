@@ -10,42 +10,43 @@ export default class Intro extends React.Component {
         super(props);
 
         this.state = {
-            horizontals: this.generateSpans(26),
+            horizontals: this.generateSpans(25, 1),
             transitionClass: TRANSITION_CLASSNAME,
-            poop: 0
+            animCounter: 1
         }
 
         this.bump = this.bump.bind(this);
     }
     componentDidMount() {
-        setTimeout(this.bump, 2000);
+        // setTimeout(this.bump, 500);
     }
-    generateSpans(n, poopSetter=0) {
+    generateSpans(n, offset=0) {
         const result = [];
 
         for (let i = 0; i < n; i++) {
-            if (i === poopSetter) {
-                result.push(<span POOP="1" />);
-            } else {
-                result.push(<span />);
-            }
+            result.push(<span key={i + offset} />);
         }
 
         return result;
     }
+    bumpReset () {
+
+    }
     bump () {
-        const {horizontals, poop} = this.state;
-        const enterFrom = horizontals.slice(1);
-        const enterTo = horizontals.slice();
+        // const enterFrom = horizontals.slice(1);
+        // const enterTo = horizontals.slice();
+        const {animCounter} = this.state;
+        let counter = animCounter;
 
-        // this.setState({transitionClass: '', horizontals: enterFrom}, () => {
-        //     this.setState({transitionClass: TRANSITION_CLASSNAME, horizontals: enterTo});
-        //     setTimeout(this.bump, 2000);
-        // });
+        if (counter >= 25) {
+            counter = 0;
+        } else {
+            counter += 1;
+        }
 
-        this.setState({poop: poop + 1}, () => {
-            this.setState({horizontals: this.generateSpans(25, this.state.poop)})
-            setTimeout(this.bump, 2000);
+        this.setState({transitionClass: '', horizontals: this.generateSpans(25, 1 + counter), animCounter: counter}, () => {
+            this.setState({transitionClass: TRANSITION_CLASSNAME, horizontals: this.generateSpans(25, 0 + counter)});
+            setTimeout(this.bump, 500);
         });
 
         // this.setState({transitionClass: '', horizontals: enterFrom});
@@ -73,6 +74,7 @@ export default class Intro extends React.Component {
                         {horizontals}
                     </div>
                 </div>
+                <h1 className="title">THISGUY</h1>
             </div>
         )
     }
