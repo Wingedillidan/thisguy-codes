@@ -48,23 +48,18 @@ export default class Intro extends React.Component {
             this.setState({transitionClass: TRANSITION_CLASSNAME, horizontals: this.generateSpans(25, 0 + counter)});
             setTimeout(this.bump, 500);
         });
-
-        // this.setState({transitionClass: '', horizontals: enterFrom});
-        // this.forceUpdate(() => {
-        //     this.setState({transitionClass: TRANSITION_CLASSNAME, horizontals: enterTo});
-        //     setTimeout(this.bump, 2000);
-        // })
-
     }
     render () {
         const {horizontals, transitionClass} = this.state;
         return (
             <div className="backdrop">
+                {this.generateSpans(3)}
                 <div className="horizon">
                     <div className="verticals-left">
                         {this.generateSpans(10)}
                     </div>
                     <div className="verticals-center">
+                        <span />
                         <span />
                     </div>
                     <div className="verticals-right">

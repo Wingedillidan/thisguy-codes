@@ -16,18 +16,12 @@ p::after {
     content: '*';
 }
 
-@keyframes anim-title-1 {
+@keyframes anim-title {
     0% {
         z-index: -1;
-        top: 40%;
+        top: calc(40% - .5em);
         opacity: 0;
         font-size: 5em;
-    }
-    20% {
-        opacity: 0;
-    }
-    30% {
-        opacity: 0;
     }
     49% {
         z-index: -1;
@@ -40,29 +34,41 @@ p::after {
         opacity: 1;
     }
     100% {
-        top: 50%;
-        // letter-spacing: .1em;
-        font-size: 7em;
+        top: calc(50% + 1.1em);
+        font-size: 7.6em;
+        opacity: 1;
     }
 }
 
-@keyframes anim-title-2 {
+@keyframes anim-horizon {
     0% {
-        top: calc(40% - 1.1em);
-        font-size: 3em;
-        opacity: 0;
+        width: 0;
+        opacity: 1;
+        background-color: transparent;
     }
-    50% {
-        font-size: 4em;
-        top: calc(40%);
+    33% {
+        width: 100%;
+        background-color: transparent;
+    }
+    100% {
+        width: 100%;
+        opacity: 1;
+        background-color: $purple-darkest;
+    }
+}
+
+@keyframes anim-center-vertical {
+    0% {
+        height: 0;
         opacity: 1;
     }
     100% {
-        top: 60%;
-        letter-spacing: .3em;
-        font-size: 6em;
+        height: 100%;
+        opacity: 1;
     }
 }
+
+$DELAY: 0s;
 
 .backdrop {
     position: relative;
@@ -71,33 +77,24 @@ p::after {
     min-height: 50rem;
     background-color: $purple;
     z-index: -2;
-    
-    .title {
-        font-size: 5em;
-        position: absolute;
-        color: white;
-        left: 50%;
-        transform: translate(-50%);
-        white-space: nowrap;
-        // top: calc(40% - 1.1em);
-        animation: anim-title-1 13s forwards ease-in;
-        // animation: anim-title-2 18s forwards ease-in;
-    }
     .horizon {
         position: relative;
         border-top: solid $HORIZON_WIDTH $GRID_COLOR;
-        background-color: $purple-darkest;
         top: 40%;
         height: 60%;
         width: 100%;
         overflow: hidden;
+        animation: 3s ease-out 1s anim-horizon forwards;
+        opacity: 0;
 
+        $DELAY: $DELAY + 2s;
         
         .verticals-left, .verticals-right, .verticals-center {
-            span {
+            span:not(:last-child) {
                 position: absolute;
                 top: -1px;
                 height: 200%;
+                opacity: 0;
 
                 background-color: $GRID_COLOR;
 
@@ -111,52 +108,121 @@ p::after {
         .horizontals span {
             position: absolute;
             width: 100%;
+            opacity: 0;
             background-color: $GRID_COLOR;
             
             border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
             border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+
+            &:last-child {
+                opacity: 1;
+            }
         }
 
         .verticals-center span {
             left: 50%;
+            opacity: 0;
+            animation: anim-center-vertical 1s ease-in forwards;
+            animation-delay: $DELAY;
         }
+
+        $DELAY: $DELAY + 1s;
         
         .verticals-left {
-            @for $vertical-left from 0 to $GRIDLINE_VERTICAL_SIDE_COUNT {
-                span:nth-child(#{$vertical-left}) {
-                    right: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$vertical-left})));
-                    transform: rotate(calc(#{$GRID_ANGLE_STEP * $vertical-left}));
+            @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT {
+                @keyframes anim-left-#{$n} {
+                    0% {
+                        opacity: 1;
+                        right: 50%;
+                        transform: rotate(0);
+                    }
+                    100% {
+                        opacity: 1;
+                        right: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
+                        transform: rotate(calc(#{$GRID_ANGLE_STEP * $n}));
+
+                    }
+                }
+                span:nth-child(#{$n}) {
+                    animation: anim-left-#{$n} 2s forwards;
+                    animation-delay: $DELAY;
                 }
             }
         }
 
         .verticals-right {
-            @for $rightline from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT {
-                span:nth-child(#{$rightline}) {
-                    left: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$rightline})));
-                    transform: rotate(calc(-1 * #{$GRID_ANGLE_STEP * $rightline}));
+            @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT {
+                @keyframes anim-right-#{$n} {
+                    0% {
+                        opacity: 1;
+                        left: 50%;
+                        transform: rotate(0);
+                    }
+                    100% {
+                        opacity: 1;
+                        left: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
+                        transform: rotate(calc(-1 * #{$GRID_ANGLE_STEP * $n}));
+                    }
+                }
+                span:nth-child(#{$n}) {
+                    animation: anim-right-#{$n} 2s forwards;
+                    animation-delay: $DELAY;
                 }
             }
         }
 
+        // $DELAY: $DELAY + 2s;
+
         .horizontals {
             @for $n from 0 to $GRIDLINE_HORIZONTAL_COUNT {
-                $top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
                 @keyframes anim-#{$n} {
                     0% {
                         top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
                     }
                     100% {
                         top: calc(#{(($n + 2) * $GRID_HORIZONTAL_SPACING) + ((($n + 1) / 2) * ($n + 2)) * $GRID_HORIZONTAL_ACCELERATION});
-                        // top: $top;
+                    }
+                }
+                @keyframes anim-center-intro-#{$n} {
+                    0% {
+                        opacity: 1;
+                        border-top: transparent;
+                        background-color: transparent;
+                        border-bottom: transparent;
+                    }
+                    30% {
+                        border-top: solid calc($GRIDLINE_WIDTH / 2) white;
+                        background-color: white;
+                        border-bottom: solid calc($GRIDLINE_WIDTH / 2) white;
+                    }
+                    100% {
+                        opacity: 1;
+                        border-top: solid calc($GRIDLINE_WIDTH / 2) $GRID_COLOR;
+                        background-color: $GRID_COLOR;
+                        border-bottom: solid calc($GRIDLINE_WIDTH / 2) $GRID_COLOR;
                     }
                 }
                 span:nth-child(#{$n}) {
-                    animation: anim-#{$n} .5s linear forwards infinite;
-                    animation-iteration-count: 26;
+                    top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
+                    animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
+                        .5s linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 34;
+                    // animation-iteration-count: 34;
+                    // animation-delay: calc(5s + (.1s * $GRIDLINE_HORIZONTAL_COUNT));
+                    // animation-delay: calc(5s + (.1s * #{$n}));
                     // top: calc(-1% + #{(($n - 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * $n + 1) * $GRID_HORIZONTAL_ACCELERATION});
                 }
             }
         }
+    }
+    $DELAY: calc(#{$DELAY} + 3s + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
+    .title {
+        font-size: 5em;
+        position: absolute;
+        opacity: 0;
+        color: white;
+        left: 50%;
+        transform: translate(-50%);
+        white-space: nowrap;
+        animation: 17s ease-in #{$DELAY} anim-title forwards;
     }
 }
