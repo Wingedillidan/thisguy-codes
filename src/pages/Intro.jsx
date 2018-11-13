@@ -56,20 +56,23 @@ export default class Intro extends React.Component {
                 {this.generateSpans(3)}
                 <div className="horizon">
                     <div className="verticals-left">
-                        {this.generateSpans(10)}
+                        {this.generateSpans(12)}
                     </div>
                     <div className="verticals-center">
                         <span />
                         <span />
                     </div>
                     <div className="verticals-right">
-                        {this.generateSpans(10)}
+                        {this.generateSpans(12)}
                     </div>
                     <div className={`horizontals ${transitionClass}`}>
                         {horizontals}
                     </div>
                 </div>
                 <h1 className="title">THIS GUY</h1>
+                <h3 className="desc-1-left">mentor</h3>
+                <h3 className="desc-1-right">devops</h3>
+                <h3 className="desc-2">coder</h3>
             </div>
         )
     }

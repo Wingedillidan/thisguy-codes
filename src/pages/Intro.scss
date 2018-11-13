@@ -7,37 +7,15 @@ $GRID_HORIZONTAL_SPACING: 0%;
 $GRID_HORIZONTAL_ACCELERATION: .4%;
 $GRIDLINE_WIDTH: .2em;
 $HORIZON_WIDTH: .4em;
-$GRIDLINE_VERTICAL_SIDE_COUNT: 10;
+$GRIDLINE_VERTICAL_SIDE_COUNT: 12;
 $GRIDLINE_HORIZONTAL_COUNT: 25;
+
+$VELOCITY_MULTIPLIER: 1;
 
 $GRID_INIT: 50%;  // Where to start the left side of lines
 
 p::after {
     content: '*';
-}
-
-@keyframes anim-title {
-    0% {
-        z-index: -1;
-        top: calc(40% - .5em);
-        opacity: 0;
-        font-size: 5em;
-    }
-    49% {
-        z-index: -1;
-    }
-    50% {
-        top: calc(40% - 1.1em);
-        z-index: 1;
-        letter-spacing: 0em;
-        font-size: 5em;
-        opacity: 1;
-    }
-    100% {
-        top: calc(50% + 1.1em);
-        font-size: 7.6em;
-        opacity: 1;
-    }
 }
 
 @keyframes anim-horizon {
@@ -191,9 +169,9 @@ $DELAY: 0s;
                         border-bottom: transparent;
                     }
                     30% {
-                        border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) white;
-                        background-color: white;
-                        border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) white;
+                        border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) rgb(245, 255, 195);
+                        background-color: rgb(245, 255, 195);
+                        border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) rgb(245, 255, 195);
                     }
                     100% {
                         opacity: 1;
@@ -205,7 +183,7 @@ $DELAY: 0s;
                 span:nth-child(#{$n}) {
                     top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
                     animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
-                        .5s linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 34;
+                        calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 36;
                     // animation-iteration-count: 34;
                     // animation-delay: calc(5s + (.1s * $GRIDLINE_HORIZONTAL_COUNT));
                     // animation-delay: calc(5s + (.1s * #{$n}));
@@ -214,7 +192,31 @@ $DELAY: 0s;
             }
         }
     }
-    $DELAY: calc(#{$DELAY} + 3s + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
+
+    @keyframes anim-title {
+        0% {
+            z-index: -1;
+            bottom: calc(60% - 1em);
+            opacity: 0;
+            font-size: 5em;
+        }
+        49% {
+            z-index: -1;
+        }
+        50% {
+            bottom: calc(60% - .2em);
+            z-index: 1;
+            font-size: 5em;
+            opacity: 1;
+        }
+        100% {
+            bottom: calc(25%);
+            font-size: 7.6em;
+            opacity: 1;
+        }
+    }
+
+    $DELAY: calc(#{$DELAY} + (3s) + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
     .title {
         font-size: 5em;
         position: absolute;
@@ -223,6 +225,81 @@ $DELAY: 0s;
         left: 50%;
         transform: translate(-50%);
         white-space: nowrap;
-        animation: 17s ease-in #{$DELAY} anim-title forwards;
+        animation: calc(18s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-title forwards;
+    }
+
+    $DELAY: calc(#{$DELAY} + (5.5s * #{$VELOCITY_MULTIPLIER}));
+
+    @keyframes anim-desc-1-left {
+        0% {
+            z-index: -1;
+            bottom: calc(60% - 1em);
+            opacity: 0;
+            font-size: 2em;
+            left: 30%;
+        }
+        49% {
+            z-index: -1;
+        }
+        50% {
+            bottom: calc(60%);
+            left: 30%;
+
+            z-index: 1;
+            font-size: 2em;
+            opacity: 1;
+        }
+        100% {
+            bottom: calc(40%);
+            left: 23%;
+
+            font-size: 2.8em;
+            opacity: 1;
+        }
+    }
+
+    @keyframes anim-desc-1-right {
+        0% {
+            z-index: -1;
+            bottom: calc(60% - 1em);
+            opacity: 0;
+            font-size: 2em;
+            right: 30%;
+        }
+        49% {
+            z-index: -1;
+        }
+        50% {
+            bottom: calc(60%);
+            right: 30%;
+
+            z-index: 1;
+            font-size: 2em;
+            opacity: 1;
+        }
+        100% {
+            bottom: calc(40%);
+            right: 23%;
+
+            font-size: 2.8em;
+            opacity: 1;
+        }
+    }
+
+    .desc-1-left, .desc-1-right {
+        position: absolute;
+        opacity: 0;
+        color: white;
+        white-space: nowrap;
+    }
+    
+    .desc-1-left {
+        animation: calc(12.5s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-1-left forwards;
+        transform: translate(50%);
+    }
+
+    .desc-1-right {
+        animation: calc(12.5s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-1-right forwards;
+        transform: translate(-50%);
     }
 }
