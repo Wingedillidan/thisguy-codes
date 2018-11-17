@@ -14,11 +14,6 @@ export default class Intro extends React.Component {
             transitionClass: TRANSITION_CLASSNAME,
             animCounter: 1
         }
-
-        this.bump = this.bump.bind(this);
-    }
-    componentDidMount() {
-        // setTimeout(this.bump, 500);
     }
     generateSpans(n, offset=0) {
         const result = [];
@@ -28,26 +23,6 @@ export default class Intro extends React.Component {
         }
 
         return result;
-    }
-    bumpReset () {
-
-    }
-    bump () {
-        // const enterFrom = horizontals.slice(1);
-        // const enterTo = horizontals.slice();
-        const {animCounter} = this.state;
-        let counter = animCounter;
-
-        if (counter >= 25) {
-            counter = 0;
-        } else {
-            counter += 1;
-        }
-
-        this.setState({transitionClass: '', horizontals: this.generateSpans(25, 1 + counter), animCounter: counter}, () => {
-            this.setState({transitionClass: TRANSITION_CLASSNAME, horizontals: this.generateSpans(25, 0 + counter)});
-            setTimeout(this.bump, 500);
-        });
     }
     render () {
         const {horizontals, transitionClass} = this.state;
@@ -69,10 +44,14 @@ export default class Intro extends React.Component {
                         {horizontals}
                     </div>
                 </div>
-                <h1 className="title">THIS GUY</h1>
-                <h3 className="desc-1-left">mentor</h3>
-                <h3 className="desc-1-right">devops</h3>
-                <h3 className="desc-2">coder</h3>
+                <div className="text-container">
+                    <div className="text">
+                        <h1 className="title">THIS GUY</h1>
+                        <h3 className="desc-1-left">mentor</h3>
+                        <h3 className="desc-1-right">devops</h3>
+                        <h3 className="desc-2">coder</h3>
+                    </div>
+                </div>
             </div>
         )
     }
