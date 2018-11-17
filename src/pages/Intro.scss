@@ -10,13 +10,11 @@ $HORIZON_WIDTH: .4em;
 $GRIDLINE_VERTICAL_SIDE_COUNT: 12;
 $GRIDLINE_HORIZONTAL_COUNT: 25;
 
-$VELOCITY_MULTIPLIER: 1;
+$VELOCITY_MULTIPLIER: .75;  // Modifier applied to adjust the speed of the simulated forward movement
 
 $GRID_INIT: 50%;  // Where to start the left side of lines
 
-p::after {
-    content: '*';
-}
+// GRID INTRO ANIMATIONS
 
 @keyframes anim-horizon {
     0% {
@@ -149,8 +147,6 @@ $DELAY: 0s;
             }
         }
 
-        // $DELAY: $DELAY + 2s;
-
         .horizontals {
             @for $n from 0 to $GRIDLINE_HORIZONTAL_COUNT {
                 @keyframes anim-#{$n} {
@@ -193,6 +189,8 @@ $DELAY: 0s;
         }
     }
 
+    // TITLE INTRO ANIMATIONS
+
     @keyframes anim-title {
         0% {
             z-index: -1;
@@ -216,7 +214,9 @@ $DELAY: 0s;
         }
     }
 
+    // 3s groups together a few delay additions that were lost due to context boundries
     $DELAY: calc(#{$DELAY} + (3s) + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
+
     .title {
         font-size: 5em;
         position: absolute;
@@ -286,7 +286,7 @@ $DELAY: 0s;
         }
     }
 
-    .desc-1-left, .desc-1-right {
+    .desc-1-left, .desc-1-right, .desc-2 {
         position: absolute;
         opacity: 0;
         color: white;
@@ -295,11 +295,44 @@ $DELAY: 0s;
     
     .desc-1-left {
         animation: calc(12.5s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-1-left forwards;
-        transform: translate(50%);
+        transform: translateX(50%);
     }
 
     .desc-1-right {
         animation: calc(12.5s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-1-right forwards;
-        transform: translate(-50%);
+        transform: translateX(-50%);
+    }
+
+    $DELAY: calc(#{$DELAY} + (4.5s * #{$VELOCITY_MULTIPLIER}));
+
+    @keyframes anim-desc-2 {
+        0% {
+            z-index: -1;
+            bottom: calc(60% - 1em);
+            opacity: 0;
+            font-size: 2em;
+        }
+        49% {
+            z-index: -1;
+        }
+        50% {
+            bottom: calc(60%);
+
+            z-index: 1;
+            font-size: 2em;
+            opacity: 1;
+        }
+        100% {
+            bottom: calc(50%);
+
+            font-size: 2.5em;
+            opacity: 1;
+        }
+    }
+
+    .desc-2 {
+        animation: calc(8s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-2 forwards;
+        transform: translateX(-50%);
+        left: 50%;
     }
 }
