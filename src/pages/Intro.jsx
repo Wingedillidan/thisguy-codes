@@ -28,7 +28,9 @@ export default class Intro extends React.Component {
         const {horizontals, transitionClass} = this.state;
         return (
             <div className="backdrop">
-                {this.generateSpans(3)}
+                <div className="backdrop-curtains">
+                    {this.generateSpans(3)}
+                </div>
                 <div className="horizon">
                     <div className="verticals-left">
                         {this.generateSpans(12)}
@@ -45,11 +47,11 @@ export default class Intro extends React.Component {
                     </div>
                 </div>
                 <div className="text-container">
-                    <div className="text">
-                        <h1 className="title">THIS GUY</h1>
-                        <h3 className="desc-1-left">mentor</h3>
-                        <h3 className="desc-1-right">devops</h3>
-                        <h3 className="desc-2">codes</h3>
+                    <div className="text-list">
+                        <div className="text-frame title"><h1 className="text-title">THIS GUY</h1></div>
+                        <div className="text-frame subtitle1-left"><h3 className="text-subtitle">mentor</h3></div>
+                        <div className="text-frame subtitle1-right"><h3 className="text-subtitle">devops</h3></div>
+                        <div className="text-frame subtitle2"><h3 className="text-subtitle">codes</h3></div>
                     </div>
                 </div>
             </div>

@@ -9,6 +9,7 @@ $GRIDLINE_WIDTH: .2em;
 $HORIZON_WIDTH: .4em;
 $GRIDLINE_VERTICAL_SIDE_COUNT: 12;
 $GRIDLINE_HORIZONTAL_COUNT: 25;
+$GRID_HEIGHT: 60%;
 
 $VELOCITY_MULTIPLIER: .75;  // Modifier applied to adjust the speed of the simulated forward movement
 
@@ -56,8 +57,8 @@ $DELAY: 0s;
     .horizon {
         position: relative;
         border-top: solid $HORIZON_WIDTH $GRID_COLOR;
-        top: 40%;
-        height: 60%;
+        top: calc(100% - #{$GRID_HEIGHT});
+        height: $GRID_HEIGHT;
         width: 100%;
         overflow: hidden;
         animation: 3s ease-out 1s anim-horizon forwards;
@@ -179,7 +180,7 @@ $DELAY: 0s;
                 span:nth-child(#{$n}) {
                     top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
                     animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
-                        calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 29;
+                        calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 28;
                 }
             }
         }
@@ -189,34 +190,33 @@ $DELAY: 0s;
 
     @keyframes anim-title {
         0% {
-            transform: translateX(-50%) scale(.7);
+            transform: translate(-50%, 80%) scale(.7);
             z-index: -1;
-            bottom: calc(60% - 1em);
+            bottom: $GRID_HEIGHT;
             opacity: 0;
         }
         39% {
             z-index: -1;
         }
         40% {
-            transform: translateX(-50%) scale(.7);
-            bottom: calc(60% - .3em);
+            transform: translate(-50%, 20%) scale(.7);
+            bottom: $GRID_HEIGHT;
             z-index: 1;
             opacity: 1;
         }
         100% {
             transform: translateX(-50%) scale(1);
-            bottom: 25%;
+            bottom: calc(#{$GRID_HEIGHT} / 2.5);
             opacity: 1;
         }
     }
 
-    $TEXT_TIME: 14.5s;  // Partial animations require this number for delay math and whatnot
+    $TEXT_TIME: 14s;  // Partial animations require this number for delay math and whatnot
 
     // 3s groups together a few delay additions that were lost due to context boundries
     $DELAY: calc(#{$DELAY} + (3s) + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
 
     .title {
-        font-size: 5em;
         position: absolute;
         opacity: 0;
         color: white;
@@ -227,27 +227,27 @@ $DELAY: 0s;
 
     // $DELAY: calc(#{$DELAY} + (4.5s * #{$VELOCITY_MULTIPLIER}));
 
-    @keyframes anim-desc-1-left {
+    @keyframes anim-subtitle1-left {
         0% {
+            transform: translate(-50%, 80%) scale(.7);
             z-index: -1;
-            bottom: calc(60% - 1em);
+            bottom: $GRID_HEIGHT;
             opacity: 0;
-            transform: translateX(-50%) scale(.7);
             left: 18%;
         }
         39% {
             z-index: -1;
         }
         40% {
-            bottom: calc(60% - .3em);
+            transform: translate(-50%, 20%) scale(.7);
+            bottom: $GRID_HEIGHT;
             left: 18%;
 
-            transform: translateX(-50%) scale(.7);
             z-index: 1;
             opacity: 1;
         }
         100% {
-            bottom: 25%;
+            bottom: calc(#{$GRID_HEIGHT} / 2.5);
             left: 0;
 
             transform: translateX(-50%) scale(1);
@@ -255,27 +255,26 @@ $DELAY: 0s;
         }
     }
 
-    @keyframes anim-desc-1-right {
+    @keyframes anim-subtitle1-right {
         0% {
+            transform: translate(50%, 80%) scale(.7);
             z-index: -1;
-            bottom: calc(60% - 1em);
+            bottom: $GRID_HEIGHT;
             opacity: 0;
             right: 18%;
-            transform: translateX(50%) scale(.7);
         }
         39% {
             z-index: -1;
         }
         40% {
-            bottom: calc(60% - .3em);
+            transform: translate(50%, 20%) scale(.7);
+            bottom: $GRID_HEIGHT;
             right: 18%;
-
-            transform: translateX(50%) scale(.7);
             z-index: 1;
             opacity: 1;
         }
         100% {
-            bottom: 25%;
+            bottom: calc(#{$GRID_HEIGHT} / 2.5);
             right: 0;
 
             transform: translateX(50%) scale(1);
@@ -283,48 +282,48 @@ $DELAY: 0s;
         }
     }
 
-    .desc-1-left, .desc-1-right, .desc-2 {
+    .subtitle1-left, .subtitle1-right, .subtitle2 {
         position: absolute;
         opacity: 0;
         color: white;
         white-space: nowrap;
     }
     
-    .desc-1-left {
-        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-desc-1-left .8 forwards;
+    .subtitle1-left {
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-subtitle1-left .8 forwards;
     }
 
-    .desc-1-right {
-        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-desc-1-right .8 forwards;
+    .subtitle1-right {
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-subtitle1-right .8 forwards;
     }
 
     // $DELAY: calc(#{$DELAY} + (3.5s * #{$VELOCITY_MULTIPLIER}));
 
-    @keyframes anim-desc-2 {
+    @keyframes anim-subtitle2 {
         0% {
+            transform: translate(-50%, 80%) scale(.7);
+            bottom: $GRID_HEIGHT;
             z-index: -1;
-            bottom: calc(60% - 1em);
             opacity: 0;
-            transform: translateX(-50%) scale(.7);
         }
         39% {
             z-index: -1;
         }
         40% {
-            bottom: calc(60% - .3em);
+            transform: translate(-50%, 20%) scale(.7);
+            bottom: $GRID_HEIGHT;
             z-index: 1;
             opacity: 1;
-            transform: translateX(-50%) scale(.7);
         }
         100% {
-            bottom: calc(25%);
+            bottom: calc(calc(#{$GRID_HEIGHT} / 2.5));
             opacity: 1;
             transform: translateX(-50%) scale(1);
         }
     }
 
-    .desc-2 {
-        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .3) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-desc-2 .7 forwards;
+    .subtitle2 {
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .3) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-subtitle2 .7 forwards;
         left: 50%;
     }
 
@@ -338,10 +337,14 @@ $DELAY: 0s;
         position: absolute;
         overflow: hidden;
 
-        .text {
+        .text-list {
             position: relative;
             width: 100%;
             height: 100%;
+
+            .text-frame {
+                overflow: hidden;
+            }
         }
     }
 
@@ -349,11 +352,11 @@ $DELAY: 0s;
         .text-container {
             padding: 0 8%;
             
-            .title {
+            .text-title {
                 font-size: 4em;
             }
 
-            .desc-1-left, .desc-1-right, .desc-2 {
+            .text-subtitle {
                 font-size: 2em;
             }
         }
@@ -364,11 +367,11 @@ $DELAY: 0s;
         .text-container {
             padding: 0 10%;
 
-            .title {
+            .text-title {
                 font-size: 5em;
             }
 
-            .desc-1-left, .desc-1-right, .desc-2 {
+            .text-subtitle {
                 font-size: 2.5em;
             }
         }
@@ -379,11 +382,11 @@ $DELAY: 0s;
         .text-container {
             padding: 0 12%;
 
-            .title {
+            .text-title {
                 font-size: 6em;
             }
 
-            .desc-1-left, .desc-1-right, .desc-2 {
+            .text-subtitle {
                 font-size: 3em;
             }
         }
@@ -394,11 +397,11 @@ $DELAY: 0s;
         .text-container {
             padding: 0 15%;
 
-            .title {
+            .text-title {
                 font-size: 6.5em;
             }
 
-            .desc-1-left, .desc-1-right, .desc-2 {
+            .text-subtitle {
                 font-size: 3.25em;
             }
         }
@@ -407,13 +410,13 @@ $DELAY: 0s;
     // Extra large devices (large desktops, 1200px and up)
     @media (min-width: 1200px) {
         .text-container {
-            padding: 0 25%;
+            padding: 0 calc(#{$GRID_HEIGHT} / 2.5);
 
-            .title {
+            .text-title {
                 font-size: 7em;
             }
 
-            .desc-1-left, .desc-1-right, .desc-2 {
+            .text-subtitle {
                 font-size: 3.5em;
             }
         }
