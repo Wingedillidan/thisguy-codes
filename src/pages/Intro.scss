@@ -179,11 +179,7 @@ $DELAY: 0s;
                 span:nth-child(#{$n}) {
                     top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
                     animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
-                        calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 36;
-                    // animation-iteration-count: 34;
-                    // animation-delay: calc(5s + (.1s * $GRIDLINE_HORIZONTAL_COUNT));
-                    // animation-delay: calc(5s + (.1s * #{$n}));
-                    // top: calc(-1% + #{(($n - 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * $n + 1) * $GRID_HORIZONTAL_ACCELERATION});
+                        calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 29;
                 }
             }
         }
@@ -193,26 +189,28 @@ $DELAY: 0s;
 
     @keyframes anim-title {
         0% {
+            transform: translateX(-50%) scale(.7);
             z-index: -1;
             bottom: calc(60% - 1em);
             opacity: 0;
-            font-size: 5em;
         }
-        49% {
+        39% {
             z-index: -1;
         }
-        50% {
-            bottom: calc(60% - .2em);
+        40% {
+            transform: translateX(-50%) scale(.7);
+            bottom: calc(60% - .3em);
             z-index: 1;
-            font-size: 5em;
             opacity: 1;
         }
         100% {
-            bottom: calc(25%);
-            font-size: 7.6em;
+            transform: translateX(-50%) scale(1);
+            bottom: 25%;
             opacity: 1;
         }
     }
+
+    $TEXT_TIME: 14.5s;  // Partial animations require this number for delay math and whatnot
 
     // 3s groups together a few delay additions that were lost due to context boundries
     $DELAY: calc(#{$DELAY} + (3s) + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
@@ -223,37 +221,36 @@ $DELAY: 0s;
         opacity: 0;
         color: white;
         left: 50%;
-        transform: translate(-50%);
         white-space: nowrap;
-        animation: calc(18s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-title forwards;
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-title forwards;
     }
 
-    $DELAY: calc(#{$DELAY} + (5.5s * #{$VELOCITY_MULTIPLIER}));
+    // $DELAY: calc(#{$DELAY} + (4.5s * #{$VELOCITY_MULTIPLIER}));
 
     @keyframes anim-desc-1-left {
         0% {
             z-index: -1;
             bottom: calc(60% - 1em);
             opacity: 0;
-            font-size: 2em;
-            left: 12%;
+            transform: translateX(-50%) scale(.7);
+            left: 18%;
         }
-        49% {
+        39% {
             z-index: -1;
         }
-        50% {
-            bottom: calc(60%);
-            left: 12%;
+        40% {
+            bottom: calc(60% - .3em);
+            left: 18%;
 
+            transform: translateX(-50%) scale(.7);
             z-index: 1;
-            font-size: 2em;
             opacity: 1;
         }
         100% {
-            bottom: calc(40%);
+            bottom: 25%;
             left: 0;
 
-            font-size: 2.8em;
+            transform: translateX(-50%) scale(1);
             opacity: 1;
         }
     }
@@ -263,25 +260,25 @@ $DELAY: 0s;
             z-index: -1;
             bottom: calc(60% - 1em);
             opacity: 0;
-            font-size: 2em;
-            right: 12%;
+            right: 18%;
+            transform: translateX(50%) scale(.7);
         }
-        49% {
+        39% {
             z-index: -1;
         }
-        50% {
-            bottom: calc(60%);
-            right: 12%;
+        40% {
+            bottom: calc(60% - .3em);
+            right: 18%;
 
+            transform: translateX(50%) scale(.7);
             z-index: 1;
-            font-size: 2em;
             opacity: 1;
         }
         100% {
-            bottom: calc(40%);
+            bottom: 25%;
             right: 0;
 
-            font-size: 2.8em;
+            transform: translateX(50%) scale(1);
             opacity: 1;
         }
     }
@@ -294,45 +291,40 @@ $DELAY: 0s;
     }
     
     .desc-1-left {
-        animation: calc(12.5s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-1-left forwards;
-        transform: translateX(50%);
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-desc-1-left .8 forwards;
     }
 
     .desc-1-right {
-        animation: calc(12.5s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-1-right forwards;
-        transform: translateX(-50%);
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-desc-1-right .8 forwards;
     }
 
-    $DELAY: calc(#{$DELAY} + (4.5s * #{$VELOCITY_MULTIPLIER}));
+    // $DELAY: calc(#{$DELAY} + (3.5s * #{$VELOCITY_MULTIPLIER}));
 
     @keyframes anim-desc-2 {
         0% {
             z-index: -1;
             bottom: calc(60% - 1em);
             opacity: 0;
-            font-size: 2em;
+            transform: translateX(-50%) scale(.7);
         }
-        49% {
+        39% {
             z-index: -1;
         }
-        50% {
-            bottom: calc(60%);
-
+        40% {
+            bottom: calc(60% - .3em);
             z-index: 1;
-            font-size: 2em;
             opacity: 1;
+            transform: translateX(-50%) scale(.7);
         }
         100% {
-            bottom: calc(50%);
-
-            font-size: 2.5em;
+            bottom: calc(25%);
             opacity: 1;
+            transform: translateX(-50%) scale(1);
         }
     }
 
     .desc-2 {
-        animation: calc(8s * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-desc-2 forwards;
-        transform: translateX(-50%);
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .3) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-desc-2 .7 forwards;
         left: 50%;
     }
 
@@ -344,6 +336,7 @@ $DELAY: 0s;
         top: 0;
         left: 0;
         position: absolute;
+        overflow: hidden;
 
         .text {
             position: relative;
@@ -354,35 +347,75 @@ $DELAY: 0s;
 
     @media(max-width: 575px) {
         .text-container {
-            padding: 0 0%;
+            padding: 0 8%;
+            
+            .title {
+                font-size: 4em;
+            }
+
+            .desc-1-left, .desc-1-right, .desc-2 {
+                font-size: 2em;
+            }
         }
     }
 
     // Small devices (landscape phones, 576px and up)
     @media (min-width: 576px) and (max-width: 767px) {
         .text-container {
-            padding: 0 12%;
+            padding: 0 10%;
+
+            .title {
+                font-size: 5em;
+            }
+
+            .desc-1-left, .desc-1-right, .desc-2 {
+                font-size: 2.5em;
+            }
         }
     }
 
     // Medium devices (tablets, 768px and up)
     @media (min-width: 768px) and (max-width: 991px) {
         .text-container {
-            padding: 0 5%;
+            padding: 0 12%;
+
+            .title {
+                font-size: 6em;
+            }
+
+            .desc-1-left, .desc-1-right, .desc-2 {
+                font-size: 3em;
+            }
         }
     }
 
     // Large devices (desktops, 992px and up)
     @media (min-width: 992px) and (max-width: 1199px) {
         .text-container {
-            padding: 0 12%;
+            padding: 0 15%;
+
+            .title {
+                font-size: 6.5em;
+            }
+
+            .desc-1-left, .desc-1-right, .desc-2 {
+                font-size: 3.25em;
+            }
         }
     }
 
     // Extra large devices (large desktops, 1200px and up)
     @media (min-width: 1200px) {
         .text-container {
-            padding: 0 15%;
+            padding: 0 25%;
+
+            .title {
+                font-size: 7em;
+            }
+
+            .desc-1-left, .desc-1-right, .desc-2 {
+                font-size: 3.5em;
+            }
         }
     }
 }

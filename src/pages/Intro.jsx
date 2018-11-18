@@ -49,7 +49,7 @@ export default class Intro extends React.Component {
                         <h1 className="title">THIS GUY</h1>
                         <h3 className="desc-1-left">mentor</h3>
                         <h3 className="desc-1-right">devops</h3>
-                        <h3 className="desc-2">coder</h3>
+                        <h3 className="desc-2">codes</h3>
                     </div>
                 </div>
             </div>
