@@ -197,12 +197,11 @@ $DELAY: 0s;
             animation-timing-function: linear;
         }
         60% {
-            height: calc((100% - #{$GRID_HEIGHT}) * .4);
+            height: calc((100% - #{$GRID_HEIGHT}) * .33);
             animation-timing-function: linear;
         }
-        85% {
-            height: calc((100% - #{$GRID_HEIGHT}) * .3);
-            animation-timing-function: linear;
+        75% {
+            height: calc((100% - #{$GRID_HEIGHT}) * .30);
         }
         100% {
             height: calc((100% - #{$GRID_HEIGHT}) * .33);
@@ -213,15 +212,36 @@ $DELAY: 0s;
     @keyframes curtain-2 {
         0% {
             height: 0;
+            animation-timing-function: linear;
         }
-        80% {
-            height: 65%;
+        60% {
+            height: calc((100% - #{$GRID_HEIGHT}) * .66);
+            animation-timing-function: linear;
         }
-        90% {
-            height: 55%;
+        75% {
+            height: calc((100% - #{$GRID_HEIGHT}) * .62);
         }
         100% {
-            height: 66%;
+            height: calc((100% - #{$GRID_HEIGHT}) * .66);
+            animation-timing-function: ease-out;
+        }
+    }
+
+    @keyframes curtain-3 {
+        0% {
+            height: 0;
+            animation-timing-function: linear;
+        }
+        60% {
+            height: calc((100% - #{$GRID_HEIGHT}) * 1);
+            animation-timing-function: linear;
+        }
+        75% {
+            height: calc((100% - #{$GRID_HEIGHT}) * .95);
+        }
+        100% {
+            height: calc((100% - #{$GRID_HEIGHT}) * 1);
+            animation-timing-function: ease-out;
         }
     }
 
@@ -235,10 +255,17 @@ $DELAY: 0s;
             z-index: -1;
             width: 100%;
             bottom: $GRID_HEIGHT;
+            background-color: rgba(245, 255, 195, .1);
+            box-shadow: 1rempx 0 1rem #222;
         }
         span:nth-child(1) {
-            animation: 1s curtain-1 calc(#{$DELAY} + 2s) forwards;
-            background-color: pink;
+            animation: 1s curtain-1 calc(#{$DELAY} + .9s) forwards;
+        }
+        span:nth-child(2) {
+            animation: 1s curtain-2 calc(#{$DELAY} + .7s) forwards;
+        }
+        span:nth-child(3) {
+            animation: 1s curtain-3 calc(#{$DELAY} + .5s) forwards;
         }
     }
 
