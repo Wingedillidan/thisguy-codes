@@ -53,7 +53,6 @@ $DELAY: 0s;
     height: 100vh;
     min-height: 30rem;
     background-color: $purple;
-    z-index: -2;
     .horizon {
         position: relative;
         border-top: solid $HORIZON_WIDTH $GRID_COLOR;
@@ -62,6 +61,7 @@ $DELAY: 0s;
         width: 100%;
         overflow: hidden;
         animation: 3s ease-out 1s anim-horizon forwards;
+        z-index: 1;
         opacity: 0;
 
         $DELAY: $DELAY + 2s;
@@ -188,6 +188,7 @@ $DELAY: 0s;
 
     // 3s groups together a few delay additions that were lost due to context boundries
     $DELAY: calc(#{$DELAY} + (3s) + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
+    $CURTAIN_DELAY: calc(#{$DELAY} - 2s);
 
     // CURTAIN INTRO ANIMATIONS
 
@@ -252,20 +253,20 @@ $DELAY: 0s;
 
         span {
             position: absolute;
-            z-index: -1;
+            z-index: 1;
             width: 100%;
             bottom: $GRID_HEIGHT;
             background-color: rgba(245, 255, 195, .1);
             box-shadow: 1rempx 0 1rem #222;
         }
         span:nth-child(1) {
-            animation: 1s curtain-1 calc(#{$DELAY} + .9s) forwards;
+            animation: 1s curtain-1 calc(#{$CURTAIN_DELAY} + .4s) forwards;
         }
         span:nth-child(2) {
-            animation: 1s curtain-2 calc(#{$DELAY} + .7s) forwards;
+            animation: 1s curtain-2 calc(#{$CURTAIN_DELAY} + .2s) forwards;
         }
         span:nth-child(3) {
-            animation: 1s curtain-3 calc(#{$DELAY} + .5s) forwards;
+            animation: 1s curtain-3 calc(#{$CURTAIN_DELAY}) forwards;
         }
     }
 
@@ -274,22 +275,23 @@ $DELAY: 0s;
     @keyframes anim-title {
         0% {
             transform: translate(-50%, 80%) scale(.7);
-            z-index: -1;
+            z-index: 0;
             bottom: $GRID_HEIGHT;
             opacity: 0;
         }
         39% {
-            z-index: -1;
+            z-index: 0;
         }
         40% {
             transform: translate(-50%, 20%) scale(.7);
             bottom: $GRID_HEIGHT;
-            z-index: 1;
+            z-index: 2;
             opacity: 1;
         }
         100% {
             transform: translateX(-50%) scale(1);
             bottom: calc(#{$GRID_HEIGHT} / 2.5);
+            z-index: 2;
             opacity: 1;
         }
     }
@@ -299,8 +301,9 @@ $DELAY: 0s;
     .title {
         position: absolute;
         opacity: 0;
-        color: white;
+        color: $purple-lightest;
         left: 50%;
+        -webkit-text-stroke: .5px;
         white-space: nowrap;
         animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in #{$DELAY} anim-title forwards;
     }
@@ -310,23 +313,24 @@ $DELAY: 0s;
     @keyframes anim-subtitle1-left {
         0% {
             transform: translate(-50%, 80%) scale(.7);
-            z-index: -1;
+            z-index: 0;
             bottom: $GRID_HEIGHT;
             opacity: 0;
             left: 18%;
         }
         39% {
-            z-index: -1;
+            z-index: 0;
         }
         40% {
             transform: translate(-50%, 20%) scale(.7);
             bottom: $GRID_HEIGHT;
             left: 18%;
 
-            z-index: 1;
+            z-index: 2;
             opacity: 1;
         }
         100% {
+            z-index: 2;
             bottom: calc(#{$GRID_HEIGHT} / 2.5);
             left: 0;
 
@@ -338,23 +342,24 @@ $DELAY: 0s;
     @keyframes anim-subtitle1-right {
         0% {
             transform: translate(50%, 80%) scale(.7);
-            z-index: -1;
+            z-index: 0;
             bottom: $GRID_HEIGHT;
             opacity: 0;
             right: 18%;
         }
         39% {
-            z-index: -1;
+            z-index: 0;
         }
         40% {
             transform: translate(50%, 20%) scale(.7);
             bottom: $GRID_HEIGHT;
             right: 18%;
-            z-index: 1;
+            z-index: 2;
             opacity: 1;
         }
         100% {
             bottom: calc(#{$GRID_HEIGHT} / 2.5);
+            z-index: 2;
             right: 0;
 
             transform: translateX(50%) scale(1);
@@ -365,7 +370,8 @@ $DELAY: 0s;
     .subtitle1-left, .subtitle1-right, .subtitle2 {
         position: absolute;
         opacity: 0;
-        color: white;
+        -webkit-text-stroke: .5px;
+        color: $neon-purple-lightest;
         white-space: nowrap;
     }
     
@@ -375,6 +381,31 @@ $DELAY: 0s;
 
     .subtitle1-right {
         animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-subtitle1-right .8 forwards;
+    }
+
+    .enter-btn {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, 50%);
+        z-index: 2;
+
+        button {
+            cursor: pointer;
+            padding: .5rem;
+            font-size: 2em;
+            font-weight: bold;
+            background-color: $purple-darkest;
+            border: solid .3rem $neon-purple;
+            border-radius: .5rem;
+            color: $neon-purple;
+            transition: .3s;
+
+            &:hover {
+                color: $neon-purple-lighter;
+                border-color: $neon-purple-lighter;
+            }
+        }
     }
 
     // $DELAY: calc(#{$DELAY} + (3.5s * #{$VELOCITY_MULTIPLIER}));

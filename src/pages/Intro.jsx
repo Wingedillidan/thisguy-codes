@@ -52,6 +52,7 @@ export default class Intro extends React.Component {
                         <div className="text-frame subtitle1-left"><h3 className="text-subtitle">mentor</h3></div>
                         <div className="text-frame subtitle1-right"><h3 className="text-subtitle">devops</h3></div>
                         <div className="text-frame subtitle2"><h3 className="text-subtitle">codes</h3></div>
+                        <div className="text-frame enter-btn"><button>ENTER SITE</button></div>
                     </div>
                 </div>
             </div>
