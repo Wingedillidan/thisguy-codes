@@ -32,10 +32,10 @@ class App extends Component {
                 <HashRouter>
                     <Route render={({location}) => (
                         <TransitionGroup>
-                            <CSSTransition key={location.key}>
-                                <Switch>
-                                    <Route path="/" component={Intro} />
-                                    <Route path="/home" />
+                            <CSSTransition key={location.pathname} timeout={{enter: 0, exit: 3000}} classNames="intro">
+                                <Switch location={location}>
+                                    <Route path="/" exact={true} component={Intro} />
+                                    <Route path="/app" render={() => (<div>ag</div>)} />
                                 </Switch>
                             </CSSTransition>
                         </TransitionGroup>
