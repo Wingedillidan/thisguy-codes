@@ -11,7 +11,7 @@ $GRIDLINE_VERTICAL_SIDE_COUNT: 12;
 $GRIDLINE_HORIZONTAL_COUNT: 25;
 $GRID_HEIGHT: 60%;
 
-$VELOCITY_MULTIPLIER: .75;  // Modifier applied to adjust the speed of the simulated forward movement
+$VELOCITY_MULTIPLIER: .2;  // Modifier applied to adjust the speed of the simulated forward movement
 
 $GRID_INIT: 50%;  // Where to start the left side of lines
 
@@ -54,10 +54,6 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
     .text-frame > *, .text-frame button {
         animation: 1s text-frame-anim reverse forwards;
     }
-    .backdrop {
-        height: 30rem;
-        transition: 3s;
-    }
 }
 
 $DELAY: 0s;
@@ -65,9 +61,22 @@ $DELAY: 0s;
 .backdrop {
     position: relative;
     width: 100%;
-    height: 100vh;
+    // height: 100vh;
     min-height: 30rem;
     background-color: $purple;
+    transition: 3s;
+
+    &.anim-none {
+        transition: none;
+    }
+
+    &.intro {
+        .horizon {
+            animation: 3s ease-out 1s anim-horizon forwards;
+        }
+    }
+    $DELAY: $DELAY + 2s;
+
     .horizon {
         position: relative;
         border-top: solid $HORIZON_WIDTH $GRID_COLOR;
@@ -75,12 +84,9 @@ $DELAY: 0s;
         height: $GRID_HEIGHT;
         width: 100%;
         overflow: hidden;
-        animation: 3s ease-out 1s anim-horizon forwards;
         z-index: 1;
         opacity: 0;
 
-        $DELAY: $DELAY + 2s;
-        
         .verticals-left, .verticals-right, .verticals-center {
             span:not(:last-child) {
                 position: absolute;
@@ -91,7 +97,7 @@ $DELAY: 0s;
                 background-color: $GRID_COLOR;
 
                 transform-origin: 100% 0;
-                
+
                 border-left: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
                 border-right: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
             }
@@ -102,7 +108,7 @@ $DELAY: 0s;
             width: 100%;
             opacity: 0;
             background-color: $GRID_COLOR;
-            
+
             border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
             border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
 
@@ -119,7 +125,7 @@ $DELAY: 0s;
         }
 
         $DELAY: $DELAY + 1s;
-        
+
         .verticals-left {
             @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT {
                 @keyframes anim-left-#{$n} {
@@ -389,7 +395,7 @@ $DELAY: 0s;
         color: $neon-purple-lightest;
         white-space: nowrap;
     }
-    
+
     .subtitle1-left {
         animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-in calc(((#{$TEXT_TIME} * .2) * #{$VELOCITY_MULTIPLIER}) + #{$DELAY}) anim-subtitle1-left .8 forwards;
     }
@@ -451,7 +457,7 @@ $DELAY: 0s;
     }
 
     $DELAY: calc(#{$DELAY} + (#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}));
-    
+
     @keyframes anim-btn {
         0% {
             transform: translateY(93%) scaleX(0);
@@ -496,7 +502,7 @@ $DELAY: 0s;
     @media(max-width: 575px) {
         .text-container {
             padding: 0 8%;
-            
+
             .text-title {
                 font-size: 4em;
             }

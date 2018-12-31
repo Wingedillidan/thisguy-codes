@@ -3,18 +3,22 @@ import {HashRouter, Switch, Route} from 'react-router-dom';
 import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 // Components
-import Intro from './pages/Intro';
+import Hero from './components/Hero';
+import {ANIMATIONS} from './components/Hero';
 
 // Styles
 import './App.scss';
 import './styles/fonts.scss';
+
+const HEROUI = (props) => <Hero {...props} />
 
 class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            loaded: false
+            loaded: false,
+            heroHeight: '100vh'
         };
     }
     componentDidMount() {
@@ -26,19 +30,25 @@ class App extends Component {
     }
 
     render() {
-        const { loaded } = this.state;
+        const { loaded, heroHeight } = this.state;
         if (loaded) {
             return (
                 <HashRouter>
                     <Route render={({location}) => (
-                        <TransitionGroup>
-                            <CSSTransition key={location.pathname} timeout={{enter: 0, exit: 3000}} classNames="intro">
-                                <Switch location={location}>
-                                    <Route path="/" exact={true} component={Intro} />
-                                    <Route path="/app" render={() => (<div>ag</div>)} />
-                                </Switch>
-                            </CSSTransition>
-                        </TransitionGroup>
+                        <div>
+                            <Switch>
+                                <Route path="/" exact={true} render={() => <HEROUI height="100vh" animation={ANIMATIONS.INTRO} />} />
+                                <Route path="/app" render={() => <HEROUI height="40vh" animation={ANIMATIONS.OUTRO} />} />
+                            </Switch>
+                            <TransitionGroup>
+                                <CSSTransition key={location.pathname} timeout={{enter: 0, exit: 3000}} classNames="intro">
+                                    <Switch location={location}>
+                                        <Route path="/" exact={true} render={() => <div />} />
+                                        <Route path="/app" render={() => (<div>ag</div>)} />
+                                    </Switch>
+                                </CSSTransition>
+                            </TransitionGroup>
+                        </div>
                     )} />
                 </HashRouter>
             );
