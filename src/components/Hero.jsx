@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Link} from 'react-router-dom';
 
 // Stylings
-import './Hero.scss';
+import './Hero-new.scss';
 
 const TRANSITION_CLASSNAME = 'active';
 
@@ -61,9 +61,7 @@ export default class Hero extends React.Component {
                 <div className="text-container">
                     <div className="text-list">
                         <div className="text-frame title"><h1 className="text-title">THIS GUY</h1></div>
-                        <div className="text-frame subtitle1-left"><h3 className="text-subtitle">mentor</h3></div>
-                        <div className="text-frame subtitle1-right"><h3 className="text-subtitle">devops</h3></div>
-                        <div className="text-frame subtitle2"><h3 className="text-subtitle">codes</h3></div>
+                        <div className="text-frame subtitle"><h3 className="text-subtitle">CODES</h3></div>
                         <div className="text-frame enter-btn"><Link to="/app"><button>ENTER SITE</button></Link></div>
                     </div>
                 </div>

@@ -1,0 +1,227 @@
+@import "../styles/colors";
+
+$GRID_COLOR: $neon-purple;
+$GRID_ANGLE_STEP: 7deg;
+$GRID_VERTICAL_SPACING: 5rem;
+$GRID_HORIZONTAL_SPACING: 0%;
+$GRID_HORIZONTAL_ACCELERATION: .4%;
+$GRIDLINE_WIDTH: .2em;
+$HORIZON_WIDTH: .4em;
+$GRIDLINE_VERTICAL_SIDE_COUNT: 12;
+$GRIDLINE_HORIZONTAL_COUNT: 25;
+$GRID_HEIGHT: 60%;
+
+$VELOCITY_MULTIPLIER: .2;  // Modifier applied to adjust the speed of the simulated forward movement
+
+$GRID_INIT: 50%;  // Where to start the left side of lines
+
+.backdrop {
+    position: relative;
+    width: 100%;
+    min-height: 30rem;
+    background-color: $purple;
+    transition: 3s;
+
+    .backdrop-curtains {
+
+    }
+    .horizon {
+        position: relative;
+        border-top: solid $HORIZON_WIDTH $GRID_COLOR;
+        background-color: $purple-darkest;
+        overflow: hidden;
+        z-index: 1;
+
+        top: calc(100% - #{$GRID_HEIGHT});
+        width: 100%;
+        height: $GRID_HEIGHT;
+
+        [class*="verticals-"], .horizontals {
+            span {
+                position: absolute;
+                background-color: $GRID_COLOR;
+            }
+        }
+
+        .verticals-left, .verticals-right, .verticals-center {
+            span {
+                top: -1px;
+                height: 200%;
+
+                transform-origin: 100% 0;
+
+                border-left: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+                border-right: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+            }
+        }
+
+        .horizontals span {
+            width: 100%;
+
+            border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+            border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+
+            @for $n from 0 to $GRIDLINE_HORIZONTAL_COUNT {
+                &:nth-child(#{$n}) {
+                    top: calc(#{(($n + 2) * $GRID_HORIZONTAL_SPACING) + ((($n + 1) / 2) * ($n + 2)) * $GRID_HORIZONTAL_ACCELERATION});
+                }
+            }
+        }
+
+        .verticals-center span{
+            height: 100%;
+            left: 50%;
+        }
+        .verticals-left {
+            @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT + 1 {
+                span:nth-child(#{$n}) {
+                    right: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
+                    transform: rotate(calc(#{$GRID_ANGLE_STEP * $n}));
+                }
+            }
+        }
+        .verticals-right {
+            @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT + 1 {
+                span:nth-child(#{$n}) {
+                    left: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
+                    transform: rotate(calc(-1 * #{$GRID_ANGLE_STEP * $n}));
+                }
+            }
+        }
+    }
+    .text-container {
+        .text-list {
+            .text-frame {
+                position: absolute;
+                z-index: 2;
+                left: 50%;
+                color: $neon-purple-lighter;
+                white-space: nowrap;
+                transform: translateX(-50%);
+                text-shadow: 0em -.2em 0em $purple-lighter;
+
+                &.title {
+                    bottom: calc(#{$GRID_HEIGHT} / 1.5);
+                }
+                &.subtitle {
+                    bottom: calc(#{$GRID_HEIGHT} / 1.7);
+                    // color: $neon-purple-light;
+                }
+                &.enter-btn {
+                    bottom: calc(#{$GRID_HEIGHT} / 3.5);
+                    button {
+                        cursor: pointer;
+                        padding: .5rem;
+                        font-weight: bold;
+
+                        box-shadow: 0em -.1em 0em $purple-lighter;
+                        background-color: $purple-darkest;
+                        border: solid .3rem $neon-purple;
+                        border-radius: .5rem;
+                        color: $neon-purple;
+                        transition: .3s;
+
+                        &:hover {
+                            color: $neon-purple-lighter;
+                            border-color: $neon-purple-lighter;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @media(max-width: 575px) {
+        .text-container {
+            padding: 0 8%;
+
+            .text-title {
+                font-size: 3.5em;
+            }
+
+            .text-subtitle {
+                font-size: 2em;
+            }
+
+            .enter-btn button {
+                font-size: 2em;
+            }
+        }
+    }
+
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) and (max-width: 767px) {
+        .text-container {
+            padding: 0 10%;
+
+            .text-title {
+                font-size: 5em;
+            }
+
+            .text-subtitle {
+                font-size: 2.5em;
+            }
+
+            .enter-btn button {
+                font-size: 2.5em;
+            }
+        }
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) and (max-width: 991px) {
+        .text-container {
+            padding: 0 12%;
+
+            .text-title {
+                font-size: 6em;
+            }
+
+            .text-subtitle {
+                font-size: 3em;
+            }
+
+            .enter-btn button {
+                font-size: 2.75em;
+            }
+        }
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) and (max-width: 1199px) {
+        .text-container {
+            padding: 0 15%;
+
+            .text-title {
+                font-size: 6.5em;
+            }
+
+            .text-subtitle {
+                font-size: 3.25em;
+            }
+
+            .enter-btn button {
+                font-size: 2.75em;
+            }
+        }
+    }
+
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+        .text-container {
+            padding: 0 calc(#{$GRID_HEIGHT} / 2.5);
+
+            .text-title {
+                font-size: 7em;
+            }
+
+            .text-subtitle {
+                font-size: 3.5em;
+            }
+
+            .enter-btn button {
+                font-size: 3em;
+            }
+        }
+    }
+}
