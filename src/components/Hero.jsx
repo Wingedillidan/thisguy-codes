@@ -39,7 +39,7 @@ export default class Hero extends React.Component {
         const {height, animation} = this.props;
 
         return (
-            <div className={`backdrop ${animation}`} style={{height}}>
+            <div className={`anim-intro backdrop ${animation}`} style={{height}}>
                 <div className="backdrop-curtains">
                     {this.generateSpans(3)}
                 </div>
