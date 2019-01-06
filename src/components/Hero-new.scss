@@ -11,11 +11,28 @@ $GRIDLINE_VERTICAL_SIDE_COUNT: 12;
 $GRIDLINE_HORIZONTAL_COUNT: 25;
 $GRID_HEIGHT: 60%;
 
-$VELOCITY_MULTIPLIER: .2;  // Modifier applied to adjust the speed of the simulated forward movement
+$VELOCITY_MULTIPLIER: 1;  // Modifier applied to adjust the speed of the simulated forward movement
 
 $GRID_INIT: 50%;  // Where to start the left side of lines
 
 // INTRO ANIMATIONS
+
+.anim-outro {
+    @keyframes anim-text-frame {
+        0% {
+            transform: translateY(0);
+        }
+        100% {
+            transform: translateY(110%);
+        }
+    }
+
+    .text-frame, .enter-btn a {
+        > * {
+            animation: 2s ease-in anim-text-frame forwards;
+        }
+    }
+}
 
 .anim-intro {
     $DELAY: 1s;
@@ -134,17 +151,17 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
             span:nth-child(#{$n}) {
                 opacity: 0;
                 animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
-                    calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 16;
+                    calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 17;
             }
         }
     }
 
     $DELAY: calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
-    $TEXT_TIME: 8s;  // Partial animations require this number for delay math and whatnot
+    $TEXT_TIME: 6.5s;  // Partial animations require this number for delay math and whatnot
 
     @keyframes anim-title {
         0% {
-            transform: translate(-50%, 100%) scale(1.5);
+            transform: translate(-50%, 100%) scale(1.7);
             bottom: 0;
             opacity: 1;
         }
@@ -155,7 +172,99 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
         }
     }
     .title {
-        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) ease-out #{$DELAY} anim-title forwards;
+        opacity: 0;
+        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) cubic-bezier(.13,.22,.79,.9) calc(#{$DELAY} + (2s * #{$VELOCITY_MULTIPLIER})) anim-title forwards;
+    }
+    @keyframes anim-subtitle {
+        0% {
+            transform: translate(-50%, 100%) scale(1.5);
+            bottom: 0;
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(-50%) scale(1);
+            bottom: calc(#{$GRID_HEIGHT} / 1.7);
+            opacity: 1;
+        }
+    }
+
+    @keyframes anim-subtitle-text-movement {
+        0% {
+            transform: translateY(0);
+        }
+        35% {
+            transform: translateY(0);
+        }
+        44% {
+            transform: translateY(100%);
+        }
+        55% {
+            transform: translateY(0);
+        }
+        80% {
+            transform: translateY(0);
+        }
+        89% {
+            transform: translateY(100%);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes anim-subtitle-text {
+        0% {
+            content: 'DEVOPS';
+        }
+        44% {
+            content: 'DEVOPS';
+        }
+        45% {
+            content: 'MENTORS';
+        }
+        89% {
+            content: 'MENTORS';
+        }
+        90% {
+            content: 'CODES';
+        }
+        100% {
+            content: 'CODES';
+            color: $neon-purple-lighter;
+        }
+    }
+    .subtitle {
+        opacity: 0;
+        animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) cubic-bezier(.13,.22,.79,.9) calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle forwards;
+
+        .text-subtitle {
+            animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) ease-in-out calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle-text-movement forwards;
+        }
+        .text-subtitle:after {
+            animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle-text forwards;
+        }
+    }
+
+    $DELAY: calc(#{$DELAY} + ((#{$TEXT_TIME} + 2s) * #{$VELOCITY_MULTIPLIER}));
+
+    @keyframes anim-btn {
+        0% {
+            opacity: 1;
+            transform: translateY(95%) scaleX(0);
+        }
+        40% {
+            transform: translateY(95%) scaleX(1);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+            width: auto;
+        }
+    }
+
+    .enter-btn button {
+        opacity: 0;
+        animation: 2s ease-out $DELAY anim-btn forwards;
     }
 }
 
@@ -264,6 +373,8 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
                 white-space: nowrap;
                 transform: translateX(-50%);
                 text-shadow: 0em -.2em 0em $purple-lighter;
+                padding-top: .5em;
+                overflow: hidden;
 
                 &.title {
                     bottom: calc(#{$GRID_HEIGHT} / 1.5);
@@ -271,6 +382,10 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
                 &.subtitle {
                     bottom: calc(#{$GRID_HEIGHT} / 1.7);
                     // color: $neon-purple-light;
+
+                    .text-subtitle:after {
+                        content: 'CODES';
+                    }
                 }
                 &.enter-btn {
                     bottom: calc(#{$GRID_HEIGHT} / 3.5);

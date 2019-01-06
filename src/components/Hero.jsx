@@ -7,8 +7,8 @@ import './Hero-new.scss';
 const TRANSITION_CLASSNAME = 'active';
 
 export const ANIMATIONS = {
-    INTRO: 'intro',
-    OUTRO: 'outro',
+    INTRO: 'anim-intro',
+    OUTRO: 'anim-outro',
     NONE: Symbol()
 }
 
@@ -39,7 +39,7 @@ export default class Hero extends React.Component {
         const {height, animation} = this.props;
 
         return (
-            <div className={`anim-intro backdrop ${animation}`} style={{height}}>
+            <div className={`backdrop ${animation}`} style={{height}}>
                 <div className="backdrop-curtains">
                     {this.generateSpans(3)}
                 </div>
@@ -61,7 +61,7 @@ export default class Hero extends React.Component {
                 <div className="text-container">
                     <div className="text-list">
                         <div className="text-frame title"><h1 className="text-title">THIS GUY</h1></div>
-                        <div className="text-frame subtitle"><h3 className="text-subtitle">CODES</h3></div>
+                        <div className="text-frame subtitle"><h3 className="text-subtitle"></h3></div>
                         <div className="text-frame enter-btn"><Link to="/app"><button>ENTER SITE</button></Link></div>
                     </div>
                 </div>
