@@ -1,0 +1,44 @@
+@import '../colors.scss';
+
+@keyframes navbar-intro {
+    0% {
+        opacity: 0;
+        transform: translateY(125%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// Animation - INTRO
+.anim-intro nav {
+    opacity: 0;
+    animation: 1s navbar-intro 1.5s forwards ease-out;
+}
+
+// Animation - NONE
+.anim-hidden {
+    display: none;
+}
+
+// Base layout
+
+nav {
+    background-color: #333;
+
+    a {
+        padding: 1rem 1.5rem;
+        display: inline-block;
+        text-decoration: none;
+        font-size: 1.5em;
+        color: $neon-purple-lighter;
+        font-weight: 700;
+        transition: .3s;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, .1);
+            color: white;
+        }
+    }
+}

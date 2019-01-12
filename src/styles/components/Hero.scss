@@ -1,4 +1,4 @@
-@import "../styles/colors";
+@import "../colors";
 
 $GRID_COLOR: $neon-purple;
 $GRID_ANGLE_STEP: 7deg;
@@ -18,6 +18,8 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
 // INTRO ANIMATIONS
 
 .anim-outro {
+    height: 40vh;
+
     @keyframes anim-text-frame {
         0% {
             transform: translateY(0);
@@ -29,12 +31,13 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
 
     .text-frame, .enter-btn a {
         > * {
-            animation: 2s ease-in anim-text-frame forwards;
+            animation: 1s ease-in anim-text-frame forwards;
         }
     }
 }
 
 .anim-intro {
+    height: 100vh;
     $DELAY: 1s;
 
     @keyframes anim-horizon {
@@ -276,7 +279,7 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
     width: 100%;
     min-height: 30rem;
     background-color: $purple;
-    transition: 3s;
+    transition: height 3s ease-out;
     overflow: hidden;
 
     .backdrop-curtains {
@@ -337,7 +340,7 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
 
             @for $n from 0 to $GRIDLINE_HORIZONTAL_COUNT {
                 &:nth-child(#{$n}) {
-                    top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
+                    top: calc(#{(($n) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
                 }
             }
         }
@@ -399,7 +402,7 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
                         border: solid .3rem $neon-purple;
                         border-radius: .5rem;
                         color: $neon-purple;
-                        transition: .3s;
+                        transition: border-color .3s, color .3s;
 
                         &:hover {
                             color: $neon-purple-lighter;
