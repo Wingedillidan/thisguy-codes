@@ -36,33 +36,35 @@ export default class Hero extends React.Component {
     }
     render () {
         const {horizontals, transitionClass} = this.state;
-        const {height, animation} = this.props;
+        const {animation} = this.props;
 
         return (
-            <div className={`backdrop ${animation}`} style={{height}}>
-                <div className="backdrop-curtains">
-                    {this.generateSpans(3)}
-                </div>
-                <div className="horizon">
-                    <div className="verticals-left">
-                        {this.generateSpans(12)}
+            <div className={animation}>
+                <div className={`backdrop`}>
+                    <div className="backdrop-curtains">
+                        {this.generateSpans(3)}
                     </div>
-                    <div className="verticals-center">
-                        <span />
-                        <span />
+                    <div className="horizon">
+                        <div className="verticals-left">
+                            {this.generateSpans(12)}
+                        </div>
+                        <div className="verticals-center">
+                            <span />
+                            <span />
+                        </div>
+                        <div className="verticals-right">
+                            {this.generateSpans(12)}
+                        </div>
+                        <div className={`horizontals ${transitionClass}`}>
+                            {horizontals}
+                        </div>
                     </div>
-                    <div className="verticals-right">
-                        {this.generateSpans(12)}
-                    </div>
-                    <div className={`horizontals ${transitionClass}`}>
-                        {horizontals}
-                    </div>
-                </div>
-                <div className="text-container">
-                    <div className="text-list">
-                        <div className="text-frame title"><h1 className="text-title">THIS GUY</h1></div>
-                        <div className="text-frame subtitle"><h3 className="text-subtitle"></h3></div>
-                        <div className="text-frame enter-btn"><Link to="/app"><button>ENTER SITE</button></Link></div>
+                    <div className="text-container">
+                        <div className="text-list">
+                            <div className="text-frame title"><h1 className="text-title">THIS GUY</h1></div>
+                            <div className="text-frame subtitle"><h3 className="text-subtitle"></h3></div>
+                            <div className="text-frame enter-btn"><Link to="/app"><button>ENTER SITE</button></Link></div>
+                        </div>
                     </div>
                 </div>
             </div>

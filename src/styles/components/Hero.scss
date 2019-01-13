@@ -18,256 +18,260 @@ $GRID_INIT: 50%;  // Where to start the left side of lines
 // INTRO ANIMATIONS
 
 .anim-outro {
-    height: 40vh;
+    .backdrop {
+        height: 40vh;
 
-    @keyframes anim-text-frame {
-        0% {
-            transform: translateY(0);
+        @keyframes anim-text-frame {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(110%);
+            }
         }
-        100% {
-            transform: translateY(110%);
-        }
-    }
 
-    .text-frame, .enter-btn a {
-        > * {
-            animation: 1s ease-in anim-text-frame forwards;
+        .text-frame, .enter-btn a {
+            > * {
+                animation: 1s ease-in anim-text-frame forwards;
+            }
         }
     }
 }
 
 .anim-intro {
-    height: 100vh;
-    $DELAY: 1s;
+    .backdrop {
+        height: 100vh;
+        $DELAY: 1s;
 
-    @keyframes anim-horizon {
-        0% {
-            width: 0;
-            background-color: transparent;
-            opacity: 1;
-        }
-        33% {
-            width: 100%;
-            background-color: transparent;
-        }
-        100% {
-            width: 100%;
-            background-color: $purple-darkest;
-            opacity: 1;
-        }
-    }
-    .horizon {
-        opacity: 0;
-        animation: 3s ease-out $DELAY anim-horizon forwards;
-    }
-
-    $DELAY: calc(#{$DELAY} + 1s);
-
-    @keyframes anim-center-vertical {
-        0% {
-            height: 0;
-            opacity: 1;
-        }
-        100% {
-            height: 100%;
-            opacity: 1;
-        }
-    }
-    .verticals-center span {
-        left: 50%;
-        opacity: 0;
-        animation: 1s anim-center-vertical $DELAY ease-in forwards;
-    }
-
-    $DELAY: calc(#{$DELAY} + 1s);
-
-    .verticals-left {
-        @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT + 1 {
-            @keyframes anim-left-#{$n} {
-                0% {
-                    opacity: 1;
-                    right: 50%;
-                    transform: rotate(0);
-                }
-                100% {
-                    opacity: 1;
-                    right: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
-                    transform: rotate(calc(#{$GRID_ANGLE_STEP * $n}));
-
-                }
+        @keyframes anim-horizon {
+            0% {
+                width: 0;
+                background-color: transparent;
+                opacity: 1;
             }
-            span:nth-child(#{$n}) {
-                opacity: 0;
-                animation: 2s anim-left-#{$n} $DELAY forwards;
+            33% {
+                width: 100%;
+                background-color: transparent;
+            }
+            100% {
+                width: 100%;
+                background-color: $purple-darkest;
+                opacity: 1;
             }
         }
-    }
-    .verticals-right {
-        @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT + 1 {
-            @keyframes anim-right-#{$n} {
-                0% {
-                    opacity: 1;
-                    left: 50%;
-                    transform: rotate(0);
-                }
-                100% {
-                    opacity: 1;
-                    left: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
-                    transform: rotate(calc(-1 * #{$GRID_ANGLE_STEP * $n}));
-                }
+        .horizon {
+            opacity: 0;
+            animation: 3s ease-out $DELAY anim-horizon forwards;
+        }
+
+        $DELAY: calc(#{$DELAY} + 1s);
+
+        @keyframes anim-center-vertical {
+            0% {
+                height: 0;
+                opacity: 1;
             }
-            span:nth-child(#{$n}) {
-                opacity: 0;
-                animation: 2s anim-right-#{$n} $DELAY forwards;
+            100% {
+                height: 100%;
+                opacity: 1;
             }
         }
-    }
-    .horizontals {
-        @for $n from 0 to $GRIDLINE_HORIZONTAL_COUNT + 1 {
-            @keyframes anim-#{$n} {
-                0% {
-                    top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
+        .verticals-center span {
+            left: 50%;
+            opacity: 0;
+            animation: 1s anim-center-vertical $DELAY ease-in forwards;
+        }
+
+        $DELAY: calc(#{$DELAY} + 1s);
+
+        .verticals-left {
+            @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT + 1 {
+                @keyframes anim-left-#{$n} {
+                    0% {
+                        opacity: 1;
+                        right: 50%;
+                        transform: rotate(0);
+                    }
+                    100% {
+                        opacity: 1;
+                        right: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
+                        transform: rotate(calc(#{$GRID_ANGLE_STEP * $n}));
+
+                    }
                 }
-                100% {
-                    top: calc(#{(($n) * $GRID_HORIZONTAL_SPACING) + ((($n - 1) / 2) * ($n)) * $GRID_HORIZONTAL_ACCELERATION});
-                }
-            }
-            @keyframes anim-center-intro-#{$n} {
-                0% {
-                    opacity: 1;
-                    border-top: transparent;
-                    background-color: transparent;
-                    border-bottom: transparent;
-                }
-                30% {
-                    border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) rgb(245, 255, 195);
-                    background-color: rgb(245, 255, 195);
-                    border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) rgb(245, 255, 195);
-                }
-                100% {
-                    opacity: 1;
-                    border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
-                    background-color: $GRID_COLOR;
-                    border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+                span:nth-child(#{$n}) {
+                    opacity: 0;
+                    animation: 2s anim-left-#{$n} $DELAY forwards;
                 }
             }
-            span:nth-child(#{$n}) {
-                opacity: 0;
-                animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
-                    calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 17;
+        }
+        .verticals-right {
+            @for $n from 1 to $GRIDLINE_VERTICAL_SIDE_COUNT + 1 {
+                @keyframes anim-right-#{$n} {
+                    0% {
+                        opacity: 1;
+                        left: 50%;
+                        transform: rotate(0);
+                    }
+                    100% {
+                        opacity: 1;
+                        left: calc(#{$GRID_INIT} + (#{$GRID_VERTICAL_SPACING} * (#{$n})));
+                        transform: rotate(calc(-1 * #{$GRID_ANGLE_STEP * $n}));
+                    }
+                }
+                span:nth-child(#{$n}) {
+                    opacity: 0;
+                    animation: 2s anim-right-#{$n} $DELAY forwards;
+                }
             }
         }
-    }
+        .horizontals {
+            @for $n from 0 to $GRIDLINE_HORIZONTAL_COUNT + 1 {
+                @keyframes anim-#{$n} {
+                    0% {
+                        top: calc(#{(($n + 1) * $GRID_HORIZONTAL_SPACING) + (($n / 2) * ($n + 1)) * $GRID_HORIZONTAL_ACCELERATION});
+                    }
+                    100% {
+                        top: calc(#{(($n) * $GRID_HORIZONTAL_SPACING) + ((($n - 1) / 2) * ($n)) * $GRID_HORIZONTAL_ACCELERATION});
+                    }
+                }
+                @keyframes anim-center-intro-#{$n} {
+                    0% {
+                        opacity: 1;
+                        border-top: transparent;
+                        background-color: transparent;
+                        border-bottom: transparent;
+                    }
+                    30% {
+                        border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) rgb(245, 255, 195);
+                        background-color: rgb(245, 255, 195);
+                        border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) rgb(245, 255, 195);
+                    }
+                    100% {
+                        opacity: 1;
+                        border-top: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+                        background-color: $GRID_COLOR;
+                        border-bottom: solid calc(#{$GRIDLINE_WIDTH} / 2) $GRID_COLOR;
+                    }
+                }
+                span:nth-child(#{$n}) {
+                    opacity: 0;
+                    animation: 1s anim-center-intro-#{$n} calc(#{$DELAY} + (.1s * #{$n})) forwards,
+                        calc(.5s * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT})) anim-#{$n} 17;
+                }
+            }
+        }
 
-    $DELAY: calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
-    $TEXT_TIME: 6.5s;  // Partial animations require this number for delay math and whatnot
+        $DELAY: calc(#{$DELAY} + (.1s * #{$GRIDLINE_HORIZONTAL_COUNT}));
+        $TEXT_TIME: 6.5s;  // Partial animations require this number for delay math and whatnot
 
-    @keyframes anim-title {
-        0% {
-            transform: translate(-50%, 100%) scale(1.7);
-            bottom: 0;
-            opacity: 1;
+        @keyframes anim-title {
+            0% {
+                transform: translate(-50%, 100%) scale(1.7);
+                bottom: 0;
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                bottom: calc(#{$GRID_HEIGHT} / 1.5);
+                opacity: 1;
+            }
         }
-        100% {
-            transform: translateX(-50%) scale(1);
-            bottom: calc(#{$GRID_HEIGHT} / 1.5);
-            opacity: 1;
+        .title {
+            opacity: 0;
+            animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) cubic-bezier(.13,.22,.79,.9) calc(#{$DELAY} + (2s * #{$VELOCITY_MULTIPLIER})) anim-title forwards;
         }
-    }
-    .title {
-        opacity: 0;
-        animation: calc(#{$TEXT_TIME} * #{$VELOCITY_MULTIPLIER}) cubic-bezier(.13,.22,.79,.9) calc(#{$DELAY} + (2s * #{$VELOCITY_MULTIPLIER})) anim-title forwards;
-    }
-    @keyframes anim-subtitle {
-        0% {
-            transform: translate(-50%, 100%) scale(1.5);
-            bottom: 0;
-            opacity: 1;
+        @keyframes anim-subtitle {
+            0% {
+                transform: translate(-50%, 100%) scale(1.5);
+                bottom: 0;
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(-50%) scale(1);
+                bottom: calc(#{$GRID_HEIGHT} / 1.7);
+                opacity: 1;
+            }
         }
-        100% {
-            transform: translateX(-50%) scale(1);
-            bottom: calc(#{$GRID_HEIGHT} / 1.7);
-            opacity: 1;
-        }
-    }
 
-    @keyframes anim-subtitle-text-movement {
-        0% {
-            transform: translateY(0);
+        @keyframes anim-subtitle-text-movement {
+            0% {
+                transform: translateY(0);
+            }
+            35% {
+                transform: translateY(0);
+            }
+            44% {
+                transform: translateY(100%);
+            }
+            55% {
+                transform: translateY(0);
+            }
+            80% {
+                transform: translateY(0);
+            }
+            89% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
         }
-        35% {
-            transform: translateY(0);
-        }
-        44% {
-            transform: translateY(100%);
-        }
-        55% {
-            transform: translateY(0);
-        }
-        80% {
-            transform: translateY(0);
-        }
-        89% {
-            transform: translateY(100%);
-        }
-        100% {
-            transform: translateY(0);
-        }
-    }
 
-    @keyframes anim-subtitle-text {
-        0% {
-            content: 'DEVOPS';
+        @keyframes anim-subtitle-text {
+            0% {
+                content: 'DEVOPS';
+            }
+            44% {
+                content: 'DEVOPS';
+            }
+            45% {
+                content: 'MENTORS';
+            }
+            89% {
+                content: 'MENTORS';
+            }
+            90% {
+                content: 'CODES';
+            }
+            100% {
+                content: 'CODES';
+                color: $neon-purple-lighter;
+            }
         }
-        44% {
-            content: 'DEVOPS';
-        }
-        45% {
-            content: 'MENTORS';
-        }
-        89% {
-            content: 'MENTORS';
-        }
-        90% {
-            content: 'CODES';
-        }
-        100% {
-            content: 'CODES';
-            color: $neon-purple-lighter;
-        }
-    }
-    .subtitle {
-        opacity: 0;
-        animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) cubic-bezier(.13,.22,.79,.9) calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle forwards;
+        .subtitle {
+            opacity: 0;
+            animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) cubic-bezier(.13,.22,.79,.9) calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle forwards;
 
-        .text-subtitle {
-            animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) ease-in-out calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle-text-movement forwards;
+            .text-subtitle {
+                animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) ease-in-out calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle-text-movement forwards;
+            }
+            .text-subtitle:after {
+                animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle-text forwards;
+            }
         }
-        .text-subtitle:after {
-            animation: calc(#{$TEXT_TIME - 2s} * #{$VELOCITY_MULTIPLIER}) linear calc(#{$DELAY} + (4s * #{$VELOCITY_MULTIPLIER})) anim-subtitle-text forwards;
-        }
-    }
 
-    $DELAY: calc(#{$DELAY} + ((#{$TEXT_TIME} + 2s) * #{$VELOCITY_MULTIPLIER}));
+        $DELAY: calc(#{$DELAY} + ((#{$TEXT_TIME} + 2s) * #{$VELOCITY_MULTIPLIER}));
 
-    @keyframes anim-btn {
-        0% {
-            opacity: 1;
-            transform: translateY(95%) scaleX(0);
+        @keyframes anim-btn {
+            0% {
+                opacity: 1;
+                transform: translateY(95%) scaleX(0);
+            }
+            40% {
+                transform: translateY(95%) scaleX(1);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                width: auto;
+            }
         }
-        40% {
-            transform: translateY(95%) scaleX(1);
-        }
-        100% {
-            opacity: 1;
-            transform: translateY(0);
-            width: auto;
-        }
-    }
 
-    .enter-btn button {
-        opacity: 0;
-        animation: 2s ease-out $DELAY anim-btn forwards;
+        .enter-btn button {
+            opacity: 0;
+            animation: 2s ease-out $DELAY anim-btn forwards;
+        }
     }
 }
 

@@ -5,6 +5,7 @@ import {TransitionGroup, CSSTransition} from 'react-transition-group';
 // Components
 import Hero from './components/Hero';
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
 import {ANIMATIONS} from './components/Hero';
 
 // Styles
@@ -18,8 +19,7 @@ class App extends Component {
         super(props);
 
         this.state = {
-            loaded: false,
-            heroHeight: '100vh'
+            loaded: false
         };
     }
     componentDidMount() {
@@ -31,7 +31,7 @@ class App extends Component {
     }
 
     render() {
-        const { loaded, heroHeight } = this.state;
+        const { loaded } = this.state;
         if (loaded) {
             return (
                 <HashRouter>
@@ -40,10 +40,10 @@ class App extends Component {
                             <HEROUI animation={location.pathname === '/' ? ANIMATIONS.INTRO : ANIMATIONS.OUTRO} />
                             <Navbar className={location.pathname === '/' ? "anim-hidden" : "anim-intro"} />
                             <TransitionGroup>
-                                <CSSTransition key={location.pathname} timeout={{enter: 0, exit: 3000}} classNames="intrsglmo">
+                                <CSSTransition key={location.pathname} timeout={{enter: 0, exit: 3000}} classNames="anim">
                                     <Switch location={location}>
                                         <Route path="/" exact={true} render={() => <div />} />
-                                        <Route path="/app" render={() => (<div>ag</div>)} />
+                                        <Route path="/app" component={Home} />
                                     </Switch>
                                 </CSSTransition>
                             </TransitionGroup>
